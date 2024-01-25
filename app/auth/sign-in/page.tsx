@@ -9,7 +9,13 @@ import {
 } from "lucide-react";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 function SignIn() {
+  const router = useRouter();
+  const handleLogin = () => {
+    alert("đăng nhập thành công");
+    router.push("/dashboard");
+  };
   return (
     <div className="bg-gradient-to-bl from-cyan-200 to-blue-400 h-screen w-screen flex justify-center">
       <div>
@@ -55,9 +61,7 @@ function SignIn() {
           <div className="pl-8 pr-8 mt-8">
             <button
               className=" bg-blue-500 text-white w-full p-3 rounded-full hover:bg-blue-600"
-              onClick={() => {
-                alert("đăng nhập thành công");
-              }}
+              onClick={handleLogin}
             >
               Đăng nhập với mật khẩu
             </button>
