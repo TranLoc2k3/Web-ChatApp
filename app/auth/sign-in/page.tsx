@@ -1,20 +1,17 @@
 "use client";
-import {
-  CheckSquare2,
-  ChevronDown,
-  Contact2,
-  Lock,
-  MessageSquareText,
-  Smartphone,
-} from "lucide-react";
+import { Lock } from "lucide-react";
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 function SignIn() {
-  const router = useRouter();
-  const handleLogin = () => {
-    alert("đăng nhập thành công");
-    router.push("/dashboard");
+  const [phone, setPhone] = useState<string>("");
+  const customInputStyle = {
+    border: "1px solid #60a5fa",
+    width: "100%",
   };
   return (
     <div className="bg-gradient-to-bl from-cyan-200 to-blue-400 h-screen w-screen flex justify-center">
@@ -32,16 +29,12 @@ function SignIn() {
           </div>
           <div className="pl-8 pr-8">
             <div className="flex mt-8 border-b pb-2">
-              <span className="mr-4">
-                <Smartphone />
-              </span>
-              <span className="flex mr-2">
-                +84 <ChevronDown />
-              </span>
-              <input
-                placeholder="Số điện thoại"
-                className="w-full transition focus-visible:outline-none"
-              ></input>
+              <PhoneInput
+                country={"vn"}
+                value={phone}
+                onChange={(phone) => setPhone(phone)}
+                inputStyle={customInputStyle}
+              />
             </div>
           </div>
           {/* password */}
@@ -61,17 +54,14 @@ function SignIn() {
           <div className="pl-8 pr-8 mt-8">
             <button
               className=" bg-blue-500 text-white w-full p-3 rounded-full hover:bg-blue-600"
-              onClick={handleLogin}
+              onClick={() => {
+                alert("đăng nhập thành công");
+              }}
             >
               Đăng nhập với mật khẩu
             </button>
           </div>
-          {/* sign in */}
-          <div className="pl-8 pr-8 mt-3">
-            {/* <button className=" border border-blue-100 text-blue-500 w-full p-3 rounded-full hover:border-blue-500" > */}
-
-            {/* </button> */}
-          </div>
+      
           {/* quên mật khẩu */}
           <div className="pl-8 pr-8 mt-10 text-center">
             <Link className="hover:underline mr-5" href="/auth/sign-up">
