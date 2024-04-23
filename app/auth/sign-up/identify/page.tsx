@@ -2,26 +2,69 @@
 import { ChevronDown, Lock, PackageCheck } from "lucide-react";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
+import UseStore from "@/app/components/zustand/UseStore";
+import toast, { Toaster } from "react-hot-toast";
+import userAPI  from "@/api/userAPI";
+import { on } from "events";
 function SignUp() {
   const customInputStyle = {
     border: "1px solid #60a5fa",
     width: "100%",
   };
-  const [phone, setPhone] = useState<string>("");
+  const { user, setUser } = UseStore();
+  const [phone, setPhone] = useState<string>(user || "");
+  const [password, setPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [result, setResult] = useState(false);
   const route = useRouter();
 
   // Xử lý xác thực
-  const handleReliable = () => {
+  const handleReliable =  () => {
     setResult(true);
     route.push("/auth/sign-up/identify/info-signup");
   };
+
+  const onClickSignUp = async() => {
+    if (!password && !confirmPassword) {
+      toast.error("Mật khẩu không được để trống");
+      return;
+    }
+    if (password && password !== confirmPassword) {
+      toast.error("Mật khẩu không khớp");
+      return;
+    }
+    const payload = {
+      username: phone,
+      password: password,
+    };
+    if (password === confirmPassword) {
+      try {
+        const res = await userAPI.onSignUp("/auth/sign-up", payload);
+
+        if (res.data == "User already exists!") {
+          toast.error("Tài khoản đã tồn tại");
+        }
+        else{
+          toast.success("Đăng ký thành công");
+          setUser(phone);
+          handleReliable();
+        }
+
+      } catch (e) {
+        console.log(e);
+        toast.error("Đăng ký thất bại");
+        return;
+      }
+    }
+  };
   return (
     <div className="bg-gradient-to-bl from-cyan-200 to-blue-400 h-screen w-screen flex justify-center  ">
+      <div id="recaptcha-container"></div>
+      <Toaster toastOptions={{ duration: 4000 }} />
       <div>
         <div className="text-center mt-[50px]">
           <h1 className="text-blue-600 text-5xl font-bold ">Zalo</h1>
@@ -39,8 +82,8 @@ function SignUp() {
               <PhoneInput
                 country={"vn"}
                 value={phone}
-                onChange={(phone) => setPhone(phone)}
                 inputStyle={customInputStyle}
+                disabled
               />
             </div>
           </div>
@@ -52,8 +95,11 @@ function SignUp() {
               </span>
 
               <input
+                value={password}
+                type="password"
                 placeholder="Mật khẩu"
                 className="w-full transition focus-visible:outline-none "
+                onChange={(e) => setPassword(e.target.value)}
               ></input>
             </div>
           </div>
@@ -65,8 +111,11 @@ function SignUp() {
               </span>
 
               <input
+                value={confirmPassword}
+                type="password"
                 placeholder="Xác nhận mật khẩu"
                 className="w-full transition  focus-visible:outline-none"
+                onChange={(e) => setConfirmPassword(e.target.value)}
               ></input>
             </div>
           </div>
@@ -74,7 +123,7 @@ function SignUp() {
           <div className="pl-8 pr-8 mt-8">
             <button
               className=" bg-blue-500 text-white w-full p-3 rounded-full hover:bg-blue-600"
-              onClick={handleReliable}
+              onClick={onClickSignUp}
             >
               Đăng ký tài khoản
             </button>
