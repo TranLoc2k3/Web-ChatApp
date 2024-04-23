@@ -3,13 +3,13 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBqJweKkpK6hBzZGpY5x7F3No6UHVZlrL4",
-  authDomain: "otp-tintin-54584.firebaseapp.com",
-  projectId: "otp-tintin-54584",
-  storageBucket: "otp-tintin-54584.appspot.com",
-  messagingSenderId: "771441886641",
-  appId: "1:771441886641:web:47db5bd0bfbcefe07d6990",
-  measurementId: "G-7NBKJ9M2Q6"
+  apiKey: "AIzaSyAuoVNU-GkvYJh7lueVqR5-4nMkH5ZCAIk",
+  authDomain: "otp-tintin.firebaseapp.com",
+  projectId: "otp-tintin",
+  storageBucket: "otp-tintin.appspot.com",
+  messagingSenderId: "665880345683",
+  appId: "1:665880345683:web:1ea973948202fa80fa5aa6",
+  measurementId: "G-XL2634VJ38"
 };
 
 // Initialize Firebase
