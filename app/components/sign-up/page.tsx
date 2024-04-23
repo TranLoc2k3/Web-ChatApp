@@ -17,7 +17,7 @@ import {
   signInWithPhoneNumber,
 } from "firebase/auth";
 
-import UseStore from "../zustand/UseStore";
+import UseStore from "../zustand-state/UseStore";
 import userAPI from "@/api/userAPI";
 import { AxiosResponse } from "axios";
 
@@ -51,7 +51,7 @@ const SignUp: React.FC = () => {
   };
   const getUser = async () => {
     try {
-      const res = await userAPI.getUserByPhone(`user/get-user/${phone}`);
+      const res:any = await userAPI.getUserByPhone(`user/get-user/${phone}`);
       return res.data;
     } catch (e) {
       return e;

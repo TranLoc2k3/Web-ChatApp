@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
-import UseStore from "@/app/components/zustand/UseStore";
+import UseStore from "@/app/components/zustand-state/UseStore";
 import toast, { Toaster } from "react-hot-toast";
 import userAPI  from "@/api/userAPI";
 import { on } from "events";
